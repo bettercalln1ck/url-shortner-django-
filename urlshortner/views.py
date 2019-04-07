@@ -10,8 +10,8 @@ from .forms import Submitform
 
 
 
-def sellyo_redirect_view(request,shortenurl=None,*args,**kwargs):
-    obj=get_object_or_404(shorturl,shortenurl=shortenurl)
+def sellyo_redirect_view(request,shortenurl=None,*args,**kwargs):     # redirect the shortened url to main url
+    obj=get_object_or_404(shorturl,shortenurl=shortenurl) 
     return redirect(obj.url)
 
 
@@ -21,7 +21,7 @@ def home_view_fbv(request,*args,**kwargs):
     return render(request,"urlshortner/home.html",{})    
 
 class Home(View):
-    def get(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):       # handles home page
         the_form=Submitform()
         context ={
             "title":"Submit your URL HERE",   
@@ -29,7 +29,7 @@ class Home(View):
         }
         return render(request,"urlshortner/home.html",context)
 
-    def post(self,request,*args,**kwargs):
+    def post(self,request,*args,**kwargs):       # handles post request to server
         form=Submitform(request.POST)
 
         context={
@@ -37,7 +37,7 @@ class Home(View):
             "form": form,
             }   
         template="urlshortner/home.html"    
-        if form.is_valid():
+        if form.is_valid():                           # Handles the validity of form
             new_url=form.cleaned_data.get("url")
             created=shorturl.objects.filter(url=new_url)
             t=0
@@ -55,9 +55,9 @@ class Home(View):
             }
             
             if t==1:
-                template="urlshortner/success.html" 
+                template="urlshortner/success.html"         # redirect to success page if url already does not exist
             else:
-                template="urlshortner/alreadyexists.html"      
+                template="urlshortner/alreadyexists.html"      #redirect to already visit page if url already exist
         
         return render(request,template,context)
 
