@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1><center>ALREADY EXISTS</center></h1>
+<h3>><center>
+ {{object.url}}
+</center>
+<center>shortened url is <a href="{{object.get_short_url}}">{{object.get_short_url}}</a> </center>
+</h3>
+{% endblock %}
